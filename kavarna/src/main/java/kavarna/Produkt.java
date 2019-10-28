@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kavarna;
 
 /**
  *
- * @author mademon
+ * @author Matěj Kubík
  */
 abstract class Produkt implements IProdukt {
     protected String nazev;
@@ -20,11 +15,10 @@ abstract class Produkt implements IProdukt {
         this.mnozstvi = 0;
     }
 
-    
     @Override
     public String prodej(int pocet) {
         if (this.mnozstvi < pocet)
-        return String.format("Nedostatek %s na skladě!", this.nazev);
+            return String.format("Nedostatek %s na skladě!", this.nazev);
         this.mnozstvi -= pocet;
         return "";
     }
@@ -35,8 +29,6 @@ abstract class Produkt implements IProdukt {
         return "";
     }
 
-
-    
     public boolean zmenMnozstvi(int mnozstvi) {
         this.mnozstvi += mnozstvi;
         return true;
@@ -59,15 +51,17 @@ abstract class Produkt implements IProdukt {
         this.nazev = nazev;
         return true;
     };
-    public int getMnozstvi(){
+
+    public int getMnozstvi() {
         return this.mnozstvi;
     }
-    public boolean setMnozstvi(int mnozstvi){
+
+    public boolean setMnozstvi(int mnozstvi) {
         this.mnozstvi = mnozstvi;
         return true;
     }
 
     public String toString() {
-        return String.format("\n%s\t%f\t%d", this.nazev, this.cena, this.mnozstvi);
+        return String.format("\n%s\t%s\t%d", this.nazev, this.cena, this.mnozstvi);
     }
 }
