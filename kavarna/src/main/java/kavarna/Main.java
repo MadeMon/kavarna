@@ -1,7 +1,5 @@
 package kavarna;
 
-import java.util.HashMap;
-
 class Main {
     public static void main(String[] args) {
         Kavarna k = new Kavarna();
@@ -13,10 +11,11 @@ class Main {
         k.vyrob("Makovak", 3);
         k.vyrob("Mrkvak", 6);
         k.vyrob("Latte", 9);
-        System.out.print(k.vypisNabidku());
-        k.prodej("Makovak", 5);
-        k.prodej("Latte", 2);
-        System.out.print(k.vypisNabidku());
+        System.out.println(k.vypisNabidku());
+        System.out.println(k.prodej("Makovak", 5));
+        System.out.println(k.prodej("askldfjl", 5));
+        System.out.println(k.prodej("Latte", 2));
+        System.out.println(k.vypisNabidku());
         System.out.println(k.zustatekPokladny());
         // Produkt espresso = new Kava("espresso", 50);
         // Produkt makovak = new Kolac("Makovak",30);

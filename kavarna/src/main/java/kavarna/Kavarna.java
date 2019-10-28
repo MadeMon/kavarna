@@ -2,6 +2,8 @@ package kavarna;
 
 import java.util.HashMap;
 
+import produkt.*;
+
 /**
  *
  * @author Matěj Kubík
@@ -36,14 +38,16 @@ public class Kavarna {
     public String prodej(String nazev, int kolik) {
         Produkt produkt = sklad.get(nazev);
         if (produkt == null)
-            return "Nebyl nalezen zadany produkt!";
-        /**
-         * ! Cena se pricte do pokladny i pokud produktu neni dost a neproda se todo Aby
-         * TODO produkt pri nedostatecnem mnozstvi hazel chybu a neprobehlo
-         * "pokladna.pridej()"
-         */
-        pokladna.pridej(produkt.getCena() * kolik);
-        return produkt.prodej(kolik);
+            return String.format("Nebyl nalezen produkt %s!", nazev);
+        String vysledek = produkt.prodej(kolik);
+        if (vysledek == "nedostatek") {
+            return String.format("Nedostatek %s na sklade, zbyva %d...", nazev, produkt.getMnozstvi());
+        } else if (produkt.prodej(kolik) == "") {
+            pokladna.pridej(produkt.getCena() * kolik);
+            return String.format("Tady mate %d %s", kolik, nazev);
+        } else
+            return "Nastala neznama chyba...";
+
     }
 
     public String vypisNabidku() {
