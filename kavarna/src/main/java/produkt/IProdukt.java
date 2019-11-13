@@ -11,7 +11,7 @@ package produkt;
  * @author mademon
  */
 public interface IProdukt {
-     public String vyrob(int pocet);
+     // public String vyrob(int pocet);
      // float getCena();
      // String getNazev();
      // int getMnozstvi();

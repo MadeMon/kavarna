@@ -10,11 +10,4 @@ public class Kava extends Produkt {
         super(nazev, cena, suroviny, mnozstvi);
     }
 
-    // PRODAVANI
-    public String prodej() {
-        String problem = super.prodej(1);
-        if (problem != "")
-            return problem;
-        return String.format("Prodavam 1 salek %s...", this.nazev);
-    }
 }

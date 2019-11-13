@@ -11,7 +11,13 @@ import produkt.*;
 public class Kavarna {
 
     private HashMap<String, Produkt> skladProdukt = new HashMap<String, Produkt>();
-    private HashMap<String, Integer> skladIngredience = new HashMap<String, Integer>();
+
+    private HashMap<String, Integer> skladSuroviny = new HashMap<String, Integer>() {
+        @Override
+        public Integer get(Object k) {
+            return containsKey(k) ? super.get(k) : 0;
+        }
+    };
     private Pokladna pokladna = new Pokladna(500);
 
     public String pridejProdukt(String nazev, float cena, String druh, String[] suroviny, int[] mnozstvi) {
@@ -26,43 +32,39 @@ public class Kavarna {
             return "Byl spatne zadan druh produktu...";
         skladProdukt.put(nazev, produkt);
         return produkt.toString();
-
     }
 
-    public void vyrob(String nazev, int kolik) {
-        Produkt produkt = skladProdukt.get(nazev);
-        if (produkt == null)
-            System.out.println("Nebyl nalezen produkt");
-        produkt.vyrob(kolik);
-    }
+    // public void vyrob(String nazev, int kolik) {
+    // Produkt produkt = skladProdukt.get(nazev);
+    // if (produkt == null)
+    // System.out.println("Nebyl nalezen produkt");
+    // produkt.vyrob(kolik);
+    // }
 
     public String prodej(String nazev, int kolik) {
+        String output = "";
         Produkt produkt = skladProdukt.get(nazev);
         if (produkt == null)
             return String.format("Nebyl nalezen produkt %s!", nazev);
-/**
- * TODO aby se pri prodeji kava vyrobila a odecetly se ingredience ze skladu
- * TODO svytvorit classy pro sklad ingredienci a ingredience v Produktu
- */
-        if (produkt.getClass().getName() == "Kava") {
-            for(String surovina:produkt.getIngredience())
-            skladIngredience.put(surovina,skladIngredience.get(surovina)-produkt.getIngredience())
+        else if (produkt.getClass().getName() == "produkt.Kava") {
+            for (String surovina : produkt.ingredience().keySet()) {
+                if (produkt.ingredience().get(surovina) * kolik > skladSuroviny.get(surovina))
+                    return ("Nedostatek " + surovina);
+                else if (produkt.ingredience().get(surovina) == skladSuroviny.get(surovina))
+                    output += String.format("Pozor, došla surovina %s!", surovina);
+                skladSuroviny.put(surovina, skladSuroviny.get(surovina) - produkt.ingredience().get(surovina));
+            }
+            float cena = produkt.getCena() * kolik;
+            pokladna.pridej(cena);
+            return String.format("\nProdano: %d %s\nZauctovano: %f\n%s", kolik, nazev, cena, output);
         }
-        String vysledek = produkt.prodej(kolik);
-        if (vysledek == "nedostatek") {
-            return String.format("Nedostatek %s na skladProdukte, zbyva %d...", nazev, produkt.getPocet());
-        } else if (produkt.prodej(kolik) == "") {
-            pokladna.pridej(produkt.getCena() * kolik);
-            return String.format("Tady mate %d %s", kolik, nazev);
-        } else
-            return "Nastala neznama chyba...";
-
+        return "Nastala neznama chyba!!";
     }
 
     public String vypisNabidku() {
-        String output = "\n\nNAZEV\tCENA\tMNOZSTVI";
+        String output = "\n\nNAZEV\tCENA";
         for (Produkt produkt : skladProdukt.values()) {
-            output += String.format("\n%s\t%f\t%d", produkt.getNazev(), produkt.getCena(), produkt.getPocet());
+            output += String.format("\n%s\t%f", produkt.getNazev(), produkt.getCena());
         }
         return output;
     }
@@ -72,17 +74,25 @@ public class Kavarna {
     }
 
     // pridavani nove ingredience i doplnovani ingredience
-    public void pridejIngredienci(String nazev, int kolik) {
-        skladIngredience.put(nazev, skladIngredience.get(nazev) + kolik);
+    public void pridejSurovinu(String nazev, int kolik) {
+        skladSuroviny.put(nazev, skladSuroviny.get(nazev) + kolik);
     }
 
-    public void pridejIngredienci(String nazev) {
-        skladIngredience.put(nazev, skladIngredience.get(nazev));
+    public void pridejSurovinu(String nazev) {
+        skladSuroviny.put(nazev, skladSuroviny.get(nazev));
     }
 
-    public void pridejIngredienci(String[] nazvy, int[] kolik) {
+    public void pridejSurovinu(String[] nazvy, int[] kolik) {
         for (int i = 0; i < nazvy.length; i++)
-            skladIngredience.put(nazvy[i], skladIngredience.get(nazvy[i]) + kolik[i]);
+            skladSuroviny.put(nazvy[i], skladSuroviny.get(nazvy[i]) + kolik[i]);
+    }
+
+    public String vypisSuroviny() {
+        String output = "";
+        for (String surovina : this.skladSuroviny.keySet())
+            output += String.format("\n%s\t%d", surovina, this.skladSuroviny.get(surovina));
+
+        return "\nNAZEV\tMNOZSTVI(g/ml)" + output;
     }
 }
 
