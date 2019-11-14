@@ -1,6 +1,8 @@
 // package kavarna;
 package produkt;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Matěj Kubík
@@ -12,14 +14,28 @@ public class Kolac extends Produkt {
         super(nazev, cena, suroviny, mnozstvi);
     }
 
-    public String vyrob(int pocet) {
-        vyrobeno += pocet;
-        return String.format("micham testo, pecu, vytvoreno %d %s ...", pocet, this.nazev);
+    public HashMap<String, Integer> ingredience(int pocet) {
+        this.vyrobeno += pocet;
+        return super.ingredience(pocet);
     }
 
-    public String vyrob() {
-        vyrobeno++;
-        return String.format("micham testo, pecu, vytvoren 1 %s ...", this.nazev);
+    public HashMap<String, Integer> ingredience() {
+        this.vyrobeno++;
+        return super.ingredience();
+    }
+
+    public boolean odeber() {
+        if (this.vyrobeno < 1)
+            return false;
+        this.vyrobeno--;
+        return true;
+    }
+
+    public boolean odeber(int kolik) {
+        if (this.vyrobeno < kolik)
+            return false;
+        this.vyrobeno -= kolik;
+        return true;
     }
 
 }

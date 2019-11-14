@@ -24,6 +24,13 @@ public abstract class Produkt implements IProdukt {
         return this.ingredience;
     }
 
+    public HashMap<String, Integer> ingredience(int pocet) {
+        HashMap<String, Integer> output = new HashMap<String, Integer>();
+        for (String surovina : this.ingredience.keySet())
+            output.put(surovina, this.ingredience.get(surovina) * pocet);
+        return output;
+    }
+
     public float getCena() {
         return this.cena;
     };
