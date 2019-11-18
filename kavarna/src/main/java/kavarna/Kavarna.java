@@ -65,13 +65,18 @@ public class Kavarna {
     }
 
     public void save() {
-        sklad.save();/**
-                      * TODO dopsat ostatni HashMapy
-                      */
+        sklad.save();
+        nKava.save();
+        nKolace.save();
+        /**
+         * TODO dopsat ostatni HashMapy
+         */
     }
 
     public void load() {
         sklad.load();
+        nKava.load();
+        nKolace.load();
         /**
          * TODO dopsat ostatni HashMapy
          */

@@ -23,14 +23,13 @@ abstract class Seznam<H> {
 
     public void save() {
         HashMap<String, H> map = new HashMap<>(this.s);
-        System.out.println("serialization: " + this.s.size());
+        System.out.println("\nserialization length: " + this.s.size());
         try {
             FileOutputStream fos = new FileOutputStream(this.name + ".ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(map);
             oos.close();
             fos.close();
-            System.out.printf("Serialized HashMap");
             return;
         } catch (IOException ioe) {
             ioe.printStackTrace();

@@ -1,5 +1,6 @@
 package produkt;
 
+import java.io.Serializable;
 // package kavarna;
 import java.util.HashMap;
 
@@ -7,7 +8,7 @@ import java.util.HashMap;
  *
  * @author Matěj Kubík
  */
-public abstract class Produkt implements IProdukt {
+public abstract class Produkt implements IProdukt, Serializable {
     protected String nazev;
     protected float cena;
     protected HashMap<String, Integer> ingredience = new HashMap<String, Integer>();
