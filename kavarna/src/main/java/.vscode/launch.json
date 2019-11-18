@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "kavarna.Main",
+            "projectName": "java_44676039"
+        }
+    ]
+}
