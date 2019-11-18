@@ -12,12 +12,12 @@ public abstract class Produkt implements IProdukt {
     protected float cena;
     protected HashMap<String, Integer> ingredience = new HashMap<String, Integer>();
 
-    public Produkt(String nazev, float cena, String[] suroviny, int[] mnozstvi) {
+    public Produkt(String nazev, float cena, String[] ingredience, int[] mnozstvi) {
         this.nazev = nazev;
         this.cena = cena;
         // prida jednotlive suroviny a jejich mnozstvi do HashMapy ingredience
-        for (int i = 0; i < suroviny.length; i++)
-            ingredience.put(suroviny[i], mnozstvi[i]);
+        for (int i = 0; i < ingredience.length; i++)
+            this.ingredience.put(ingredience[i], mnozstvi[i]);
     }
 
     public HashMap<String, Integer> ingredience() {
