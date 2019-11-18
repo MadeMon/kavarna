@@ -25,7 +25,7 @@ abstract class Seznam<H> {
         HashMap<String, H> map = new HashMap<>(this.s);
         System.out.println("\nserialization length: " + this.s.size());
         try {
-            FileOutputStream fos = new FileOutputStream(this.name + ".ser");
+            FileOutputStream fos = new FileOutputStream("save/" + this.name + ".ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(map);
             oos.close();
@@ -39,7 +39,7 @@ abstract class Seznam<H> {
 
     public void load() {
         try {
-            FileInputStream fis = new FileInputStream(this.name + ".ser");
+            FileInputStream fis = new FileInputStream("save/" + this.name + ".ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
             this.s = (HashMap) ois.readObject();
             ois.close();
