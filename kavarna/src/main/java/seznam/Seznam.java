@@ -5,9 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
-abstract class Seznam<H> {
+abstract class Seznam<H> implements Serializable {
     protected HashMap<String, H> s;
     protected String name;
 
@@ -22,12 +23,11 @@ abstract class Seznam<H> {
     }
 
     public void save() {
-        HashMap<String, H> map = new HashMap<>(this.s);
         System.out.println("\nserialization length: " + this.s.size());
         try {
             FileOutputStream fos = new FileOutputStream("save/" + this.name + ".ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(map);
+            oos.writeObject(this.s);
             oos.close();
             fos.close();
             return;
