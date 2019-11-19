@@ -1,5 +1,7 @@
 package kavarna;
 
+import java.util.HashMap;
+
 // import java.util.HashMap;
 import produkt.*;
 import seznam.*;
@@ -27,12 +29,23 @@ public class Kavarna {
             sklad.pridej(nazvy[i], kolik[i]);
     }
 
-    public void odeberSurovinu(String nazev, int mnozstvi) {
-        sklad.odeber(nazev, mnozstvi);
+    public boolean odeberSurovinu(String nazev, int mnozstvi) {
+        return (sklad.odeber(nazev, mnozstvi));
     }
 
     public void odeberSurovinu(String nazev) {
         sklad.odeber(nazev);
+    }
+
+    public String vyrob(String nazev, int pocet) {
+        HashMap<String, Integer> ingred = new HashMap<>();
+        for (String sur : this.nKolace.get(nazev).ingredience().keySet())
+            ingred.put(sur, this.nKolace.get(nazev).ingredience().get(sur) * pocet);
+        String vysl = this.sklad.odeber(ingred);
+        if (vysl != "")
+            return vysl;
+        this.sklad.pridej(nazev, pocet);
+        return "";
     }
 
     public String vypisSklad() {
@@ -68,18 +81,38 @@ public class Kavarna {
         sklad.save();
         nKava.save();
         nKolace.save();
-        /**
-         * TODO dopsat ostatni HashMapy
-         */
     }
 
     public void load() {
         sklad.load();
         nKava.load();
         nKolace.load();
-        /**
-         * TODO dopsat ostatni HashMapy
-         */
+
+    }
+
+    public String prodej(String co, int kolik) {
+        float cena = 0;
+        if (this.nKolace.get(co) == null && this.nKava.get(co) == null)
+            return String.format("Produkt %s nebyl nalezen", co);
+        else if (this.nKolace.get(co) != null) {
+            if (!this.sklad.odeber(co, kolik))
+                return "Nedostatek " + co;
+            cena = this.nKolace.get(co).getCena();
+        } else {
+            HashMap<String, Integer> ingred = new HashMap<>();
+            for (String sur : this.nKava.get(co).ingredience().keySet())
+                ingred.put(sur, this.nKava.get(co).ingredience().get(sur));
+            String vysl = sklad.odeber(ingred);
+            if (vysl != "")
+                return vysl;
+            cena = this.nKava.get(co).getCena();
+        }
+        this.pokladna.pridej(cena * kolik);
+        return "Cena: " + cena * kolik;
+    }
+
+    public String vypisPokladnu() {
+        return this.pokladna.toString();
     }
 
     /**

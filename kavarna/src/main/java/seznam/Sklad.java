@@ -39,8 +39,9 @@ public class Sklad extends Seznam<Integer> {
             if (ingred.get(surovina) > this.s.get(surovina)) {
                 this.s = backup; // problem se surovinou -> sklad se vrati do stavu pred prodejem
                 return ("Nedostatek / neexistuje " + surovina);
-            } else if (ingred.get(surovina) == s.get(surovina))
-                output += String.format("Pozor, došla surovina %s!", surovina);
+            }
+            // else if (ingred.get(surovina) == s.get(surovina))
+            // output += String.format("Pozor, došla surovina %s!", surovina);
             this.s.put(surovina, this.s.get(surovina) - ingred.get(surovina));
         }
         return output;
@@ -48,7 +49,7 @@ public class Sklad extends Seznam<Integer> {
 
     @Override
     public String toString() {
-        String output = "\n\nSKLAD\tNAZEV\tMNOZSTVI";
+        String output = "\n\nSKLAD\n\tNAZEV\tMNOZSTVI";
         for (String nazev : this.s.keySet())
             output += String.format("\n%s\t%d", nazev, this.s.get(nazev));
         return output;

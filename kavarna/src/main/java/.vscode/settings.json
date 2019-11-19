@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "kavarna/Main": true,
+    ".vscode": true
+  }
+}

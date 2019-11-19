@@ -22,6 +22,10 @@ abstract class Seznam<H> implements Serializable {
         return true;
     }
 
+    public H get(String nazev) {
+        return this.s.get(nazev);
+    }
+
     public void save() {
         System.out.println("\nserialization length: " + this.s.size());
         try {
