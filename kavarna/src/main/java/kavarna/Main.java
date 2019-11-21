@@ -27,7 +27,7 @@ class Main {
 
     public static void main(String[] args) {
         k.load();
-//         add();
+        // add();
         System.out.println(k.vypisPokladnu());
         System.out.println(k.prodej("espresso", 2));
         System.out.println(k.prodej("makovak", 1));
@@ -35,7 +35,7 @@ class Main {
         System.out.println(k.vypisPokladnu());
         System.out.println(k.vypisSklad());
         System.out.println(k.vypisNabidku());
-//         k.save();
+        // k.save();
 
     }
 }
