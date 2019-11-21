@@ -40,8 +40,7 @@ public class Sklad extends Seznam<Integer> {
                 this.s = backup; // problem se surovinou -> sklad se vrati do stavu pred prodejem
                 return ("Nedostatek / neexistuje " + surovina);
             }
-            // else if (ingred.get(surovina) == s.get(surovina))
-            // output += String.format("Pozor, došla surovina %s!", surovina);
+
             this.s.put(surovina, this.s.get(surovina) - ingred.get(surovina));
         }
         return output;
@@ -49,27 +48,10 @@ public class Sklad extends Seznam<Integer> {
 
     @Override
     public String toString() {
-        String output = "\n\nSKLAD\n\tNAZEV\tMNOZSTVI";
+        String output = "\nSKLAD\nNAZEV\tMNOZSTVI";
         for (String nazev : this.s.keySet())
             output += String.format("\n%s\t%d", nazev, this.s.get(nazev));
         return output;
     }
-
-    // public void save() {
-    // HashMap<String, Integer> map = new HashMap<>(this.s);
-    // System.out.println("ser: " + map.get("mouka"));
-    // try {
-    // FileOutputStream fos = new FileOutputStream(this.name + ".ser");
-    // ObjectOutputStream oos = new ObjectOutputStream(fos);
-    // oos.writeObject(map);
-    // oos.close();
-    // fos.close();
-    // System.out.printf("Serialized HashMap");
-    // return;
-    // } catch (IOException ioe) {
-    // ioe.printStackTrace();
-    // return;
-    // }
-    // }
 
 }
